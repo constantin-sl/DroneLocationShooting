@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<table>
+    <tr>
+        <td>
+            <h1>Список локаций</h1>
+            <a href="{{ url_for('add_location_object') }}" class="btn btn-outline-primary">Добавить</a>
+        </td>
+        <td>
+            <img src="{{ url_for('static', filename='drone.png') }}" alt="drone photo">
+        </td>
+    </tr>
+    <tr>
+        <td colspan="2">
+            <table class="table table-hover">
+
+                <thead>
+                <tr>
+                    <th>Название</th>
+                    <th>Координаты</th>
+                    <th>Действия</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for location_object in location_objects %}
+                <tr>
+                    <td>{{ location_object.name }}</td>
+                    <td>{{ location_object.coords }}</td>
+                    <td>
+                        <a href=" {{ url_for(
+            'edit_location_object', id=location_object.id) }}"
+            class="btn btn-sm btn-outline-primary">Редактировать</a>
+            <form method="post" action="{{ url_for('delete_location_object', id=location_object.id) }}"
+                  style="display: inline">
+                <button type="submit" class="btn btn-sm btn-outline-danger">Удалить</button>
+            </form>
+        </td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+</td>
+</tr>
+</table>
+
+
+{% endblock %}

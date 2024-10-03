@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<table>
+    <tr>
+        <td>
+            <h1>Миссия</h1>
+            <button onclick="startMission()" class="btn btn-outline-primary">Запустить</button>
+        </td>
+        <td>
+            <img src="{{ url_for('static', filename='drone.png') }}" alt="drone photo">
+        </td>
+    </tr>
+    <tr>
+        <td colspan="2">
+            <table class="table table-hover" id="mission-results">
+                <thead>
+                <tr>
+                    <th>Имя локации</th>
+                    <th>Координаты</th>
+                    <th>Статус</th>
+                </tr>
+                </thead>
+                <tbody>
+                <!-- Данные будут загружаться сюда -->
+                </tbody>
+            </table>
+        </td>
+    </tr>
+</table>
+<script>
+    function startMission() {
+        fetch('/start_mission')
+            .then(response => response.json())
+            .then(data => {
+                let resultsTableBody = document.querySelector('#mission-results tbody');
+                resultsTableBody.innerHTML = ''; // Очистить таблицу перед загрузкой новых данных
+                data.forEach(location => {
+                    let row = `<tr>
+                                <td>${location.name}</td>
+                                <td>${location.coords}</td>
+                                <td>${location.status === 1 ? 'Выполнено' : 'Не выполнено'}</td>
+                            </tr>`;
+                    resultsTableBody.innerHTML += row;
+                });
+            })
+            .catch(error => console.error('Error:', error));
+    }
+</script>
+{% endblock %}

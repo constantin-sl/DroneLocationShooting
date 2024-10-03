@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>Добавить локацию</h1>
+    <div class="col-6">
+    <form method="post" action="{{ url_for('add_location_object') }}">
+        <div class="mb-3">
+            <label for="name" class="form-label">Назание локации</label>
+            <input type="text" class="form-control" id="name" name="name" required>
+        </div>
+        <div class="mb-3">
+            <label for="coords" class="form-label">Координаты</label>
+            <input type="text" class="form-control" id="coords" name="coords" required>
+        </div>
+        <button type="submit" class="btn btn-outline-primary">Сохранить</button>
+    </form>
+    </div>
+{% endblock %}
